@@ -1,6 +1,7 @@
 const Game = require('../model/schema/game.schema').Game
 const Experience = require('../model/schema/experience.schema').Experience
 const ApiResponse = require('../model/response/api.response')
+const Platform = require('../model/schema/platform.schema')
 
 function getAllGames(req, res) {
     Game.find({}, {
@@ -51,8 +52,6 @@ function editGame(req, res) {
         },
         function (err, game) {
 
-            // TODO: Check params and include update for cover
-
             if (err) {
                 res.status(500).json(err).end()
             }
@@ -93,124 +92,37 @@ function createGame(req, res) {
 
     let title = req.body.title || ''
     let description = req.body.description || ''
-    let cover = req.files.cover.data
+    let cover = req.files.cover.data || ''
     let platform = req.body.platform || ''
     let genre = req.body.genre || ''
     let publisher = req.body.publisher || ''
     let releaseDate = req.body.releaseDate || ''
 
-    const game = new Game({
-        title: title,
-        description: description,
-        cover: new Buffer(cover).toString('base64'),
-        genre: genre,
-        publisher: publisher,
-        releaseDate: releaseDate
-    })
-
-    console.log(game.cover)
-
-    game.save(function (err) {
-        if (err) {
-            res.status(500).json(err).end()
+    Platform.findOne({
+        abb: platform
+    }, function (err, platform) {
+        if (!platform) {
+            res.status(404).json(new ApiResponse(404, "Couldn't find a platform with the abbreviation: " + req.body.platform)).end()
         } else {
-            res.status(200).json(game).end()
-        }
-    })
 
-}
+            const game = new Game({
+                title: title,
+                description: description,
+                cover: new Buffer(cover).toString('base64'),
+                genre: genre,
+                platform: platform,
+                publisher: publisher,
+                releaseDate: releaseDate
+            })
 
-function addExperience(req, res) {
+            game.save(function (err) {
+                if (err) {
+                    res.status(500).json(err).end()
+                } else {
+                    res.status(200).json(game).end()
+                }
+            })
 
-    let content = req.body.content || ''
-    let user = req.body.user || ''
-    let date = new Date()
-    let rating = req.body.rating || ''
-
-    let game = req.params.id || ''
-
-    if (content == '' || user == '' || rating == '') {
-        res.status(412).json(new ApiResponse(412, "Please provide parameters: content, user")).end()
-    }
-
-    experience = new Experience({
-        user: user,
-        content: content,
-        date: date,
-        rating: rating
-    })
-
-    Game.findOne({
-            _id: game
-        },
-        function (err, game) {
-            if (err) {
-                res.status(500).json(err).end()
-            } else {
-
-                game.experiences.push(experience)
-
-                game.save(function (err) {
-                    if (err) {
-                        res.status(500).json(err).end()
-                    } else {
-                        res.status(200).json(game).end()
-                    }
-                })
-            }
-        })
-}
-
-function getExperienceByGame(req, res) {
-
-    let game = req.params.id || ''
-
-    Game.findOne({
-            _id: game
-        },
-        function (err, game) {
-            if (err) {
-                res.status(500).json(err).end()
-            } else {
-                game.save(function (err) {
-                    if (err) {
-                        res.status(500).json(err).end()
-                    } else {
-                        res.status(200).json(game.experiences).end()
-                    }
-                })
-            }
-        })
-
-}
-
-function editExperience(req, res) {
-
-    let game = req.params.id || ''
-    let experience = req.params.experienceId || ''
-
-    let content = req.body.content || ''
-    let rating = req.body.rating || ''
-
-    if (content == '' || rating == '') {
-        res.status(412).json(new ApiResponse(412, "Please provide parameters: content, rating")).end()
-    }
-
-    Game.findOneAndUpdate({
-        "_id": game,
-        "experiences._id": experience
-    }, {
-        "$set": {
-            "experiences.$.content": content,
-            "experiences.$.rating": rating
-        }
-    }, {
-        new: true
-    }, function (err, doc) {
-        if (err) {
-            res.status(500).json(new ApiResponse(500, err)).end()
-        } else {
-            res.status(200).json(doc.experiences).end()
         }
     })
 
@@ -220,8 +132,5 @@ module.exports = {
     getAllGames,
     createGame,
     editGame,
-    addExperience,
-    getExperienceByGame,
     getGameByID,
-    editExperience
 }

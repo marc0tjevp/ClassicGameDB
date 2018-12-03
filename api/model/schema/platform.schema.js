@@ -9,6 +9,17 @@ var platformSchema = new Schema({
         unique: true,
     },
 
+    abb: {
+        type: String,
+        required: true,
+        unique: true
+    },
+
+    description: {
+        type: String,
+        required: false
+    }
+
 })
 
 const Platform = mongoose.model('platform', platformSchema)

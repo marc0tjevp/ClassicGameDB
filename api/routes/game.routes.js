@@ -9,11 +9,4 @@ routes.post('/', controller.createGame)
 
 routes.put('/', controller.editGame)
 
-routes.post('/:id/experience', controller.addExperience)
-
-routes.get('/:id/experience', controller.getExperienceByGame)
-
-routes.put('/:id/experience/:experienceId', controller.editExperience)
-
-
 module.exports = routes
