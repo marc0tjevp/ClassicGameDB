@@ -48,10 +48,13 @@ app.use(morgan(':method :url :status :response-time ms - :res[content-length]'))
 
 // Route Imports
 const gameroutes = require('./routes/game.routes')
+const userroutes = require('./routes/user.routes')
+
 
 // Routes
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/games', gameroutes)
+app.use('/users', userroutes)
 
 // Catch 404's
 app.use('*', function (req, res) {

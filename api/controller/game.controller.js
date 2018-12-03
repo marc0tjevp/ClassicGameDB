@@ -34,7 +34,6 @@ function getGameByID(req, res) {
         })
 }
 
-
 function editGame(req, res) {
 
     // Get ID
