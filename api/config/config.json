@@ -1,0 +1,8 @@
+
+{
+    "port": 8080,
+    "databases": {
+        "mongo": "mongodb://localhost/cgdb",
+        "mongotest": "mongodb://localhost/cgdb"
+    }
+}

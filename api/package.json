@@ -1,0 +1,32 @@
+{
+  "name": "classicgamesdb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marc0tjevp/ClassicGameDB.git"
+  },
+  "author": "Marco van Poortvliet",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/marc0tjevp/ClassicGameDB/issues"
+  },
+  "homepage": "https://github.com/marc0tjevp/ClassicGameDB#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "boxen": "^2.0.0",
+    "express": "^4.16.4",
+    "express-fileupload": "^1.0.0",
+    "mongoose": "^5.3.14",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1"
+  }
+}
