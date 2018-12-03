@@ -15,6 +15,11 @@ var experienceSchema = new Schema({
         required: true
     },
 
+    rating: {
+        type: Number,
+        required: true
+    },
+
     date: {
         type: Date,
         required: true
