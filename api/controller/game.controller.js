@@ -4,9 +4,7 @@ const ApiResponse = require('../model/response/api.response')
 const Platform = require('../model/schema/platform.schema')
 
 function getAllGames(req, res) {
-    Game.find({}, {
-        cover: 0
-    }, function (err, games) {
+    Game.find({}, function (err, games) {
         if (err) {
             res.status(500).json(err).end()
         } else {
@@ -88,6 +86,42 @@ function editGame(req, res) {
         })
 }
 
+function getAllGamesByPlatform(req, res) {
+
+    // Get abbreviation
+    let abb = req.params.abb || ''
+
+    // Check if abbreviation is present
+    if (abb == '') {
+        res.status(412).json("No abb").end()
+    }
+
+    Platform.findOne({
+        abb: abb
+    },
+    function (err, platform) {
+
+        if (err) {
+            res.status(500).json(err).end()
+        }
+
+        if (!platform) {
+            res.status(404).json("Platform does not exist").end()
+        }
+
+        Game.find({
+            platform: platform._id
+        },
+        function (err, games) {
+            if (err) {
+                res.status(500).json(err).end()
+            } else {
+                res.status(200).json(games).end()
+            }
+        })
+    })
+}
+
 function createGame(req, res) {
 
     let title = req.body.title || ''
@@ -133,4 +167,5 @@ module.exports = {
     createGame,
     editGame,
     getGameByID,
+    getAllGamesByPlatform
 }

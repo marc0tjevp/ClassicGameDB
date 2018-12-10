@@ -5,6 +5,8 @@ routes.get('/', controller.getAllGames)
 
 routes.get('/:id', controller.getGameByID)
 
+routes.get('/platform/:abb', controller.getAllGamesByPlatform)
+
 routes.post('/', controller.createGame)
 
 routes.put('/', controller.editGame)

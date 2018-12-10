@@ -1,9 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const boxen = require('boxen')
+const cors = require('cors')
 const fileUpload = require('express-fileupload')
 var morgan = require('morgan')
 const app = express()
+
+// CORS
+app.use(cors());
+app.options('*', cors());
 
 // Config
 const config = require('./config/config.json')

@@ -1,6 +1,16 @@
 const Platform = require('../model/schema/platform.schema')
 const ApiResponse = require('../model/response/api.response')
 
+function getAllPlatforms(req, res) {
+    Platform.find({}, function (err, platforms) {
+        if (err) {
+            res.status(500).json(err).end()
+        } else {
+            res.status(200).json(platforms).end()
+        }
+    })
+}
+
 function createPlatform(req, res) {
 
     let name = req.body.name || ''
@@ -30,5 +40,6 @@ function createPlatform(req, res) {
 }
 
 module.exports = {
+    getAllPlatforms,
     createPlatform
 }
