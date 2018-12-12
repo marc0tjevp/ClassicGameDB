@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <games-list/>
+    <games-list />
 
   </div>
 </template>
@@ -19,10 +19,10 @@
   import Vue from 'vue';
   import GamesList from '@/components/GamesList.vue';
 
-export default Vue.extend({
-  name: 'home',
-  components: {
-    GamesList,
-  },
-})
+  export default Vue.extend({
+    name: 'home',
+    components: {
+      GamesList,
+    },
+  })
 </script>

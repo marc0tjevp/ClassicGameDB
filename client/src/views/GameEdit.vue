@@ -1,7 +1,18 @@
 <template>
     <div class="gameedit">
+
         <form @submit.prevent="handleSubmit">
+
+            <div v-if="this.token < 1" class="row">
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                    Hey there! You need to <router-link to="/login">login</router-link> to add and edit games!
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
+
                 <div class="col-4">
                     <div class="form-group">
                         <label for="cover">Cover</label>
@@ -17,28 +28,28 @@
 
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input v-validate="'required|min:3'" name="title" type="text" id="title" class="form-control"
-                            v-model="game.title" />
-                            {{ errors.first('title') }}
+                        <input :disabled="this.token < 1" v-validate="'required|min:3'" name="title" type="text" id="title"
+                            class="form-control" v-model="game.title" />
+                        {{ errors.first('title') }}
                     </div>
 
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <input v-validate="'required|min:3'" name="description" type="text" id="description" class="form-control"
-                            v-model="game.description" />
-                            {{ errors.first('description') }}
+                        <input :disabled="this.token < 1" v-validate="'required|min:3'" name="description" type="text"
+                            id="description" class="form-control" v-model="game.description" />
+                        {{ errors.first('description') }}
                     </div>
 
                     <div class="form-group d-none">
                         <label for="platform">Platform</label>
-                        <input type="text" id="platform" class="form-control" v-model="game.platform" />
+                        <input :disabled="this.token < 1" type="text" id="platform" class="form-control" v-model="game.platform" />
                     </div>
 
                     <div class="form-group">
                         <label for="genre">Genre</label>
-                        <input v-validate="'required|min:3'" name="genre" type="text" id="genre" class="form-control"
-                            v-model="game.genre" />
-                            {{ errors.first('genre') }}
+                        <input :disabled="this.token < 1" v-validate="'required|min:3'" name="genre" type="text" id="genre"
+                            class="form-control" v-model="game.genre" />
+                        {{ errors.first('genre') }}
                     </div>
 
                 </div>
@@ -49,23 +60,23 @@
 
                     <div class="form-group">
                         <label for="publisher">Publisher</label>
-                        <input v-validate="'required|min:3'" name="publisher" type="text" id="publisher" class="form-control"
-                            v-model="game.publisher" />
-                            {{ errors.first('publisher') }}
+                        <input :disabled="this.token < 1" v-validate="'required|min:3'" name="publisher" type="text" id="publisher"
+                            class="form-control" v-model="game.publisher" />
+                        {{ errors.first('publisher') }}
                     </div>
 
                     <div class="form-group">
                         <label for="releaseDate">Release Date</label>
-                        <input v-validate="'required'" name="releaseDate" type="text" id="releaseDate" class="form-control"
-                            v-model="game.releaseDate" />
-                            {{ errors.first('releaseDate') }}
+                        <input :disabled="this.token < 1" v-validate="'required'" name="releaseDate" type="text" id="releaseDate"
+                            class="form-control" v-model="game.releaseDate" />
+                        {{ errors.first('releaseDate') }}
                     </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button :disabled="this.token < 1" type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
 
-            <div style="margin-top: 20px;" class="row">
-                <div class="col-12">
+            <div v-if="this.token" style="margin-top: 20px;" class="row">
+                <div  class="col-12">
                     <p>Came here to change the Platform? Create a new game entry instead!</p>
                 </div>
             </div>
@@ -83,6 +94,8 @@
         components: {
             Base64Upload
         },
+
+        props: ['token'],
 
         data() {
             return {
@@ -116,7 +129,7 @@
             },
 
             handleSubmit() {
-                
+
                 const self = this
 
                 this.$validator.validateAll().then((result) => {
@@ -128,25 +141,25 @@
 
                     // Post the game
                     axios.put('http://localhost:8080/games', {
-                        id: this.game._id,
-                        title: this.game.title,
-                        cover: this.game.cover,
-                        description: this.game.description,
-                        genre: this.game.genre,
-                        platform: this.game.platform,
-                        publisher: this.game.publisher,
-                        releaseDate: this.game.releaseDate
-                    })
-                    .then(function (response) {
-                        self.$router.push('../');
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                            id: this.game._id,
+                            title: this.game.title,
+                            cover: this.game.cover,
+                            description: this.game.description,
+                            genre: this.game.genre,
+                            platform: this.game.platform,
+                            publisher: this.game.publisher,
+                            releaseDate: this.game.releaseDate
+                        })
+                        .then(function (response) {
+                            self.$router.push('../');
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
 
                 }).catch(() => {
                     console.log(":(")
-                });                
+                });
             }
         },
 

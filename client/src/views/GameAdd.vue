@@ -6,8 +6,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="cover">Cover</label>
-                        <base64-upload imageSrc="http://www.markweb.in/primehouseware/images/noimage.png"
-                            @change="onChangeImage"></base64-upload>
+                        <base64-upload imageSrc="http://www.markweb.in/primehouseware/images/noimage.png" @change="onChangeImage"></base64-upload>
                         {{ errors.first('cover') }}
                     </div>
                 </div>
@@ -78,6 +77,8 @@
             Base64Upload
         },
 
+        props: ['token'],
+
         data() {
             return {
                 platforms: [],
@@ -139,6 +140,10 @@
                             platform: this.game.platform,
                             publisher: this.game.publisher,
                             releaseDate: this.game.releaseDate
+                        }, {
+                            headers: {
+                                Authorization: this.token
+                            }
                         })
                         .then(function (response) {
                             this.overview(response.data._id)
@@ -155,6 +160,11 @@
         },
 
         mounted() {
+            if (!this.token) {
+                this.$router.push({
+                    name: 'login',
+                })
+            }
             this.loadPlatforms()
         }
     }

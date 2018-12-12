@@ -3,6 +3,19 @@ const jwt = require('jwt-simple')
 
 const config = require('./config.json')
 
+let checkToken = (req, res, next) => {
+
+    let token = req.headers['x-access-token'] || req.headers['authorization'] || '' // Express headers are auto converted to lowercase
+    
+    if (token == ''){
+        return res.status(413).json({
+            message: 'Auth token is not supplied'
+        })
+    } else {
+        next();
+    }
+}
+
 function encodeToken(username) {
 
     const playload = {
@@ -36,5 +49,6 @@ function decodeToken(token, cb) {
 
 module.exports = {
     encodeToken,
-    decodeToken
+    decodeToken,
+    checkToken
 };

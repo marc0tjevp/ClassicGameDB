@@ -1,13 +1,17 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <login/>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+  import Vue from 'vue';
+  import Login from '@/components/Login.vue';
 
-export default Vue.extend({
-  name: 'home',
-})
+  export default Vue.extend({
+    name: 'home',
+    components: {
+    Login,
+  },
+  })
 </script>

@@ -4,12 +4,53 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/platforms">Platforms</router-link> |
       <router-link to="/games">Games</router-link>
+      <p v-if="loggedin">Logged in</p>
     </div>
     <div class="container">
-      <router-view />
+      <router-view :token="token" />
     </div>
   </div>
 </template>
+
+<script lang="ts">
+  import Vue from 'vue';
+
+  export default Vue.extend({
+
+    name: 'App',
+
+    data() {
+      return {
+        token: '',
+        loggedin: false,
+      }
+    },
+
+    mounted() {
+      this.getToken()
+      if(this.token.length > 0) {
+        this.loggedin = true
+      }
+    },
+
+    methods: {
+
+      getToken() {
+        this.token = document.cookie
+          .split(';')
+          .map((c) => c.trim())
+          .filter((cookie) => {
+            return cookie.substring(0, 'Auth'.length + 1) === `${'Auth'}=`;
+          })
+          .map((cookie) => {
+            return decodeURIComponent(cookie.substring('Auth'.length + 1));
+          })[0] || ''
+      }
+
+    }
+
+  })
+</script>
 
 <style>
   #app {

@@ -40,6 +40,11 @@ export default new Router({
       path: '/games/:id',
       name: 'gameoverview',
       component: () => import('./views/GameOverview.vue'),
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('./components/Login.vue'),
     }
   ],
 });
