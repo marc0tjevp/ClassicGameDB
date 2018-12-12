@@ -109,7 +109,7 @@
                     publisher: '',
                     releaseDate: ''
                 },
-                url: 'http://localhost:8080/games/' + this.$route.params.id
+                url: 'https://classicgamedb.herokuapp.com/games/' + this.$route.params.id
             }
         },
 
@@ -140,7 +140,7 @@
                     }
 
                     // Post the game
-                    axios.put('http://localhost:8080/games', {
+                    axios.put('https://classicgamedb.herokuapp.com/games', {
                             id: this.game._id,
                             title: this.game.title,
                             cover: this.game.cover,

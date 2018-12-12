@@ -2,9 +2,10 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import VeeValidate from 'vee-validate';
-import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-import VueCookie from 'vue-cookie';
+
+var VueIziToast = require('vue-izitoast')
+var VueCookie = require('vue-cookie');
 
 Vue.use(VueIziToast);
 Vue.use(VeeValidate);

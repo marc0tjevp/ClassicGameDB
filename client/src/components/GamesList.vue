@@ -41,11 +41,11 @@
     data() {
       return {
         games: [],
-        url: function () {
+        url: () => {
           if (this.$route.params.abb) {
-            return 'http://localhost:8080/games/platform/' + this.$route.params.abb
+            return 'https://classicgamedb.herokuapp.com/games/platform/' + this.$route.params.abb
           } else {
-            return 'http://localhost:8080/games'
+            return 'https://classicgamedb.herokuapp.com/games'
           }
         }
       }
@@ -59,7 +59,7 @@
 
     methods: {
 
-      overview(id) {
+      overview(id: any) {
         this.$router.push({
           name: 'gameoverview',
           params: {

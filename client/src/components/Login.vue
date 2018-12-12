@@ -82,7 +82,7 @@
                     }
 
                     // Login
-                    axios.post('http://localhost:8080/users/login', {
+                    axios.post('https://classicgamedb.herokuapp.com/users/login', {
                             username: this.user.username,
                             password: this.user.password,
                         })

@@ -36,7 +36,7 @@
 
     created() {
       if (this.token) {
-        axios.get('http://localhost:8080/users', {
+        axios.get('https://classicgamedb.herokuapp.com/users', {
             headers: {
               Authorization: this.token
             }

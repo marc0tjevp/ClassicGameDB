@@ -33,7 +33,7 @@
 
     methods: {
 
-      overview(abb) {
+      overview(abb: any) {
         this.$router.push({
           name: 'gamesbyplatform',
           params: {
@@ -47,7 +47,7 @@
     data() {
       return {
         platforms: [],
-        url: 'http://localhost:8080/platforms'
+        url: 'https://classicgamedb.herokuapp.com/platforms'
       }
     },
 

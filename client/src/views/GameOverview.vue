@@ -84,7 +84,7 @@
           publisher: '',
           releaseDate: ''
         },
-        url: 'http://localhost:8080/games/' + this.$route.params.id
+        url: 'https://classicgamedb.herokuapp.com/games/' + this.$route.params.id
       }
     },
 

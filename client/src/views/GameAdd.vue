@@ -110,7 +110,7 @@
             },
 
             loadPlatforms() {
-                axios.get('http://localhost:8080/platforms')
+                axios.get('https://classicgamedb.herokuapp.com/platforms')
                     .then(response => {
                         this.platforms = response.data
                         console.log(response.data)
@@ -132,7 +132,7 @@
                     }
 
                     // Post the game
-                    axios.post('http://localhost:8080/games', {
+                    axios.post('https://classicgamedb.herokuapp.com/games', {
                             title: this.game.title,
                             cover: this.game.cover,
                             description: this.game.description,
