@@ -28,16 +28,16 @@ console.log(boxen('ClassicGameDB API', {
 // Mongoose
 var mongoose = require('mongoose')
 
-mongoose.connect(config.databases.mongo, {
+mongoose.connect(process.env.MONGO || config.databases.mongo, {
   useNewUrlParser: true
 })
 
 var db = mongoose.connection
 
-db.on('error', console.error.bind(console, 'Could not connect to ' + config.databases.mongo + ": "))
+db.on('error', console.error.bind(console, 'Could not connect to ' + process.env.MONGO || config.databases.mongo + ": "))
 
 db.once('open', function () {
-  console.log('Mongoose: Connected to Mongo Database: ' + config.databases.mongo)
+  console.log('Mongoose: Connected to Mongo Database: ' + process.env.MONGO || config.databases.mongo)
   db.db.stats(function (err, stats) {
     console.log(stats);
   })
@@ -77,7 +77,7 @@ var server = app.listen(process.env.PORT || config.port, function () {
   var host = server.address().address
   var port = server.address().port
 
-  console.log("Express: Listening to Socket: http://localhost:" + port)
+  console.log("Express: Listening on port: " + port)
 })
 
 module.exports = {
