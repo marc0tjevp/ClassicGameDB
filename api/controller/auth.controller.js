@@ -1,6 +1,6 @@
 const ApiResponse = require('../model/response/api.response')
 const auth = require('../config/authentication.config')
-const User = require('../model/schema/user.schema')
+const User = require('../model/schema/user.schema').User
 
 function login(req, res) {
 
@@ -86,7 +86,40 @@ function register(req, res) {
 
 }
 
+function getUser(req, res) {
+
+    var token = req.get('Authorization') || ''
+	var decodedUsername
+	if (token != '') {
+		decodedUsername = auth.decodeToken(token)
+    }
+
+    User.findOne({
+        username: decodedUsername.sub
+    },
+
+    function (error, foundUser) {
+
+        // If we couldn't find that user, return a 404
+        if (!foundUser) {
+            res.status(404).json(new ApiResponse(404, "Couldn't find a user")).end()
+        }
+
+        if (error) {
+            res.status(500).end()
+        }
+
+        // User is found
+        else { 
+            res.status(200).json(foundUser).end()
+        }
+    })
+
+
+}
+
 module.exports = {
     login,
-    register
+    register,
+    getUser
 }

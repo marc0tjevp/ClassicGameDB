@@ -38,12 +38,15 @@
 
     <div class="row">
       <div class="col-12">
+        <router-link tag="button" :to="'/games/xp/' + this.$route.params.id" type="button" class="btn btn-primary float-right">Add your XP!</router-link>
+      </div>
+      <div class="col-12">
         <div v-for="(data, index) in selectedGame.experiences" :key="index" class="card">
           <div class="card-body">
             <blockquote>
               <p>{{ data.content }}</p>
               <p>Rating: {{ data.rating }}</p>
-              <footer class="blockquote-footer">By {{ data.user }} on <cite>{{ data.date }}</cite></footer>
+              <footer class="blockquote-footer">By {{ data.user.username }} on <cite>{{ data.date }}</cite></footer>
             </blockquote>
           </div>
         </div>

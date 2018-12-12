@@ -6,7 +6,7 @@
             <div v-if="this.token < 1" class="row">
                 <div class="col-12">
                     <div class="alert alert-info" role="alert">
-                    Hey there! You need to <router-link to="/login">login</router-link> to add and edit games!
+                        Hey there! You need to <router-link to="/login">login</router-link> to add and edit games!
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
             </div>
 
             <div v-if="this.token" style="margin-top: 20px;" class="row">
-                <div  class="col-12">
+                <div class="col-12">
                     <p>Came here to change the Platform? Create a new game entry instead!</p>
                 </div>
             </div>
@@ -149,6 +149,10 @@
                             platform: this.game.platform,
                             publisher: this.game.publisher,
                             releaseDate: this.game.releaseDate
+                        }, {
+                            headers: {
+                                Authorization: this.token
+                            }
                         })
                         .then(function (response) {
                             self.$router.push('../');

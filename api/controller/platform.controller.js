@@ -16,15 +16,17 @@ function createPlatform(req, res) {
     let name = req.body.name || ''
     let description = req.body.description || ''
     let abb = req.body.abb || ''
+    let image = req.body.image || ''
 
-    if (name == '' || description == '' || abb == '') {
-        res.status(412).json(new ApiResponse(412, "Please provide parameters: name, description")).end()
+    if (name == '' || description == '' || abb == '' || image == '') {
+        res.status(412).json(new ApiResponse(412, "Please provide parameters: name, description, abb, cover")).end()
     }
 
     const platform = new Platform({
         name: name,
         abb: abb,
-        description, description
+        description, description,
+        image: image
     })
 
     console.log(platform)

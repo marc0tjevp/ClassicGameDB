@@ -3,8 +3,10 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/platforms">Platforms</router-link> |
-      <router-link to="/games">Games</router-link>
-      <p v-if="loggedin">Logged in</p>
+      <router-link to="/games">Games</router-link> |
+      <div v-if="loggedin">
+        <a @click="logout()">Log out</a>
+      </div>
     </div>
     <div class="container">
       <router-view :token="token" />
@@ -26,25 +28,43 @@
       }
     },
 
+    watch: {
+      'token'(to, from) {
+
+        // Log
+        console.log('new token found: ' + to)
+        
+        // Set the new token
+        this.getToken()
+
+        // Check if logged in
+        if (this.token.length > 0) {
+          this.loggedin = true
+        } else {
+          this.loggedin = false
+        }
+
+      }
+    },
+
     mounted() {
       this.getToken()
-      if(this.token.length > 0) {
-        this.loggedin = true
-      }
     },
 
     methods: {
 
+      logout() {
+        this.$cookie.delete('auth');
+        this.token = ''
+      },
+
       getToken() {
-        this.token = document.cookie
-          .split(';')
-          .map((c) => c.trim())
-          .filter((cookie) => {
-            return cookie.substring(0, 'Auth'.length + 1) === `${'Auth'}=`;
-          })
-          .map((cookie) => {
-            return decodeURIComponent(cookie.substring('Auth'.length + 1));
-          })[0] || ''
+
+        // Get token from cookie
+        var cookie = this.$cookie.get('auth');
+
+        this.token = cookie || ''
+
       }
 
     }

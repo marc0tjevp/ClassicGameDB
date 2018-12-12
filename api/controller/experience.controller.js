@@ -1,46 +1,74 @@
 const Game = require('../model/schema/game.schema').Game
 const Experience = require('../model/schema/experience.schema').Experience
 const ApiResponse = require('../model/response/api.response')
+const auth = require('../config/authentication.config')
+const User = require('../model/schema/user.schema').User
 
 function addExperience(req, res) {
 
     let content = req.body.content || ''
-    let user = req.body.user || ''
     let date = new Date()
     let rating = req.body.rating || ''
-
     let game = req.params.id || ''
 
-    if (content == '' || user == '' || rating == '') {
+    if (content == '' || rating == '') {
         res.status(412).json(new ApiResponse(412, "Please provide parameters: content, user")).end()
     }
 
-    experience = new Experience({
-        user: user,
-        content: content,
-        date: date,
-        rating: rating
-    })
+    var token = req.get('Authorization') || ''
+	var decodedUsername
+	if (token != '') {
+		decodedUsername = auth.decodeToken(token)
+    }
 
-    Game.findOne({
-            _id: game
-        },
-        function (err, game) {
-            if (err) {
-                res.status(500).json(err).end()
-            } else {
+    User.findOne({
+        username: decodedUsername.sub
+    },
 
-                game.experiences.push(experience)
+    function (error, foundUser) {
 
-                game.save(function (err) {
+        // If we couldn't find that user, return a 404
+        if (!foundUser) {
+            res.status(404).json(new ApiResponse(404, "Couldn't find a user")).end()
+        }
+
+        if (error) {
+            res.status(500).end()
+        }
+
+        // User is found
+        else { 
+
+            experience = new Experience({
+                user: foundUser._id,
+                content: content,
+                date: date,
+                rating: rating
+            })
+        
+            Game.findOne({
+                    _id: game
+                },
+                function (err, game) {
                     if (err) {
                         res.status(500).json(err).end()
                     } else {
-                        res.status(200).json(game).end()
+        
+                        game.experiences.push(experience)
+        
+                        game.save(function (err) {
+                            if (err) {
+                                res.status(500).json(err).end()
+                            } else {
+                                res.status(200).json(game).end()
+                            }
+                        })
                     }
                 })
-            }
-        })
+
+        }
+    })
+
 }
 
 function getExperienceByGame(req, res) {
@@ -60,7 +88,7 @@ function getExperienceByGame(req, res) {
                     res.status(200).json(game.experiences).end()
                 }
             }
-        })
+        }).populate('user')
 }
 
 function editExperience(req, res) {

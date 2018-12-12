@@ -29,9 +29,9 @@ function getGameByID(req, res) {
         function (err, game) {
             if (err) {
                 res.status(500).json(err).end()
-            } else {
-                res.status(200).json(game).end()
             }
+        }).populate('experiences.user', {password: 0}).exec(function (err, game) {
+            res.status(200).json(game).end()
         })
 }
 

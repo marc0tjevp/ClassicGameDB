@@ -2,7 +2,7 @@
   <div class="gameslist">
     <div class="row">
       <div class="col-12">
-        <table v-if="games" class="table table-hover table-bordered table-striped">
+        <table v-if="games.lenght > 0" class="table table-hover table-bordered table-striped">
           <thead>
             <tr>
               <th>Cover Art</th>

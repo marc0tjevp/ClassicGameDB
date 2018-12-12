@@ -1,21 +1,25 @@
 <template>
   <div class="platformlist">
-    <table class="table table-hover table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>Abb</th>
-          <th>Name</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(data, index) in platforms" :key="index" @click="overview(data.abb)">
-            <td>{{ data.abb }}</td>
-            <td>{{ data.name }}</td>
-            <td>{{ data.description }}</td>
-        </tr>
-      </tbody>
-    </table>
+
+    <div v-if="platforms.length > 0" class="row">
+      <div class="col-4" v-for="(data, index) in platforms" :key="index" @click="overview(data.abb)">
+        <div class="card">
+          <img class="card-img-top" style="padding: 10%;" :src="'data:image/png;base64,' + data.image" />
+          <div class="card-body">
+            <h5 class="card-title">
+              <p>{{ data.abb }}</p>
+            </h5>
+            <p class="card-text">{{ data.name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-else class="row">
+      <p>No Platforms found :(</p>
+    </div>
+
+
   </div>
 </template>
 
@@ -29,9 +33,14 @@
 
     methods: {
 
-        overview(abb) {
-            this.$router.push({name: 'gamesbyplatform', params: {abb: abb}})
-        }
+      overview(abb) {
+        this.$router.push({
+          name: 'gamesbyplatform',
+          params: {
+            abb: abb
+          }
+        })
+      }
 
     },
 
@@ -45,14 +54,14 @@
     mounted() {
 
       axios.get(this.url)
-      .then(response => {
-        this.platforms = response.data
-      })
-      .catch(function (error) {
-        if (error.response) {
-          console.log(error.response);
-        }
-      })
+        .then(response => {
+          this.platforms = response.data
+        })
+        .catch(function (error) {
+          if (error.response) {
+            console.log(error.response);
+          }
+        })
 
     },
 

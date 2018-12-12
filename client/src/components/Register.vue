@@ -2,6 +2,8 @@
     <div class="register">
         <form @submit.prevent="register">
 
+        <h3 class="text-center">Register</h3>
+
             <div class="form-group">
                 <label for="username">Username</label>
                 <input v-validate="'required'" name="username" type="text" id="username" class="form-control" v-model="user.username" />
@@ -86,8 +88,6 @@
                 }).catch(() => {
                     console.log(":(")
                 });
-
-
 
             }
 

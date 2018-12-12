@@ -15,6 +15,10 @@ var platformSchema = new Schema({
         unique: true
     },
 
+    image: {
+        type: String
+    },
+
     description: {
         type: String,
         required: false

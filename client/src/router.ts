@@ -17,6 +17,11 @@ export default new Router({
       component: () => import('./views/Platforms.vue'),
     },
     {
+      path: '/platforms/add',
+      name: 'addplatform',
+      component: () => import('./views/PlatformAdd.vue'),
+    },
+    {
       path: '/games',
       name: 'games',
       component: () => import('./views/Games.vue'),
@@ -30,6 +35,11 @@ export default new Router({
       path: '/games/edit/:id',
       name: 'editgame',
       component: () => import('./views/GameEdit.vue'),
+    },
+    {
+      path: '/games/xp/:id',
+      name: 'xpgame',
+      component: () => import('./views/GameXP.vue'),
     },
     {
       path: '/platforms/:abb',
