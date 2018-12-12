@@ -36,6 +36,7 @@
 
 <script>
     import axios from 'axios'
+    import izitoast from 'izitoast';
 
     export default {
 
@@ -47,24 +48,6 @@
                     username: '',
                     password: '',
                 },
-                notificationSystem: {
-                        success: {
-                            theme: 'dark',
-                            icon: 'fas fa-check-circle',
-                            position: 'topCenter',
-                            backgroundColor: '#28a745',
-                            progressBar: false,
-                            timeout: 2000,
-                        },
-                        error: {
-                            theme: 'dark',
-                            icon: 'fas fa-exclamation-circle',
-                            position: 'topCenter',
-                            backgroundColor: '#dc3545',
-                            progressBar: false,
-                            timeout: 2000,
-                        }
-                }
             }
         },
 
@@ -89,26 +72,44 @@
                         .then(function (response) {
                             var newtoken = response.data.message
                             this.$cookie.set('auth', newtoken, 1);
-                            self.$toast.show(' ',
-                                    'Logged in as ' + this.user.username,
-                                    self.notificationSystem.success);
                             this.$router.go(0);
                         }.bind(this))
                         .catch(function (error) {
                             console.log(error);
                             if (error.response.status == 401) {
-                                self.$toast.show(' ',
-                                    'Wrong Credentials',
-                                    self.notificationSystem.error);
+                                izitoast.show({
+                                    title: ' ',
+                                    message: 'Wrong Credentials',
+                                    theme: 'dark',
+                                    icon: 'fas fa-exclamation-circle',
+                                    position: 'topCenter',
+                                    backgroundColor: '#dc3545',
+                                    progressBar: false,
+                                    timeout: 2000,
+                                });
                             } else
                             if (error.response.status == 404) {
-                                self.$toast.show(' ',
-                                    'Username does not exist, consider creating an account',
-                                    self.notificationSystem.error);
+                                izitoast.show({
+                                    title: ' ',
+                                    message: 'Username does not exist, consider creating an account',
+                                    theme: 'dark',
+                                    icon: 'fas fa-exclamation-circle',
+                                    position: 'topCenter',
+                                    backgroundColor: '#dc3545',
+                                    progressBar: false,
+                                    timeout: 2000,
+                                });
                             } else {
-                                self.$toast.show(' ',
-                                    'Something went wrong on our end :(',
-                                    self.notificationSystem.error);
+                                izitoast.show({
+                                    title: ' ',
+                                    message: 'Someting went wrong on our end',
+                                    theme: 'dark',
+                                    icon: 'fas fa-exclamation-circle',
+                                    position: 'topCenter',
+                                    backgroundColor: '#dc3545',
+                                    progressBar: false,
+                                    timeout: 2000,
+                                });
                             }
                         })
 

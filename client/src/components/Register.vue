@@ -2,7 +2,7 @@
     <div class="register">
         <form @submit.prevent="register">
 
-        <h3 class="text-center">Register</h3>
+            <h3 class="text-center">Register</h3>
 
             <div class="form-group">
                 <label for="username">Username</label>
@@ -25,6 +25,7 @@
 
 <script>
     import axios from 'axios'
+    import izitoast from 'izitoast';
 
     export default {
 
@@ -34,24 +35,7 @@
                     username: '',
                     password: '',
                 },
-                notificationSystem: {
-                        success: {
-                            theme: 'dark',
-                            icon: 'fas fa-check-circle',
-                            position: 'topCenter',
-                            backgroundColor: '#28a745',
-                            progressBar: false,
-                            timeout: 2000,
-                        },
-                        error: {
-                            theme: 'dark',
-                            icon: 'fas fa-exclamation-circle',
-                            position: 'topCenter',
-                            backgroundColor: '#dc3545',
-                            progressBar: false,
-                            timeout: 2000,
-                        }
-                }
+
             }
         },
 
@@ -74,15 +58,22 @@
                             password: this.user.password,
                         })
                         .then(function (response) {
-                            this.$router.push('../');
+                            this.$router.push('games');
                         }.bind(this))
                         .catch(function (error) {
                             if (error.response.status == 422) {
-                                self.$toast.show(' ',
-                                    'This username is already taken, is someone trying to impersonate you? :o',
-                                    self.notificationSystem.error);
+                                izitoast.show({
+                                    title: ' ',
+                                    message: 'This username is already taken, is someone trying to impersonate you? :o',
+                                    theme: 'dark',
+                                    icon: 'fas fa-exclamation-circle',
+                                    position: 'topCenter',
+                                    backgroundColor: '#dc3545',
+                                    progressBar: false,
+                                    timeout: 2000,
+                                });
+                                console.log(error);
                             }
-                            console.log(error);
                         })
 
                 }).catch(() => {
