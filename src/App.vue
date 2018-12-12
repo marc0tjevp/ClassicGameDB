@@ -33,7 +33,7 @@
 
         // Log
         console.log('new token found: ' + to)
-        
+
         // Set the new token
         this.getToken()
 
@@ -54,14 +54,17 @@
     methods: {
 
       logout() {
-        this.$cookie.delete('auth');
+        const self: any = this
+        self.$cookie.delete('auth');
         this.token = ''
       },
 
       getToken() {
 
+        const self: any = this
+
         // Get token from cookie
-        var cookie = this.$cookie.get('auth');
+        var cookie = self.$cookie.get('auth');
 
         this.token = cookie || ''
 

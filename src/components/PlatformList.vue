@@ -33,7 +33,7 @@
 
     methods: {
 
-      overview(abb) {
+      overview(abb: any) {
         this.$router.push({
           name: 'gamesbyplatform',
           params: {

@@ -41,7 +41,7 @@
     data() {
       return {
         games: [],
-        url: function () {
+        url: () => {
           if (this.$route.params.abb) {
             return 'https://classicgamedb.herokuapp.com/games/platform/' + this.$route.params.abb
           } else {
@@ -59,7 +59,7 @@
 
     methods: {
 
-      overview(id) {
+      overview(id: any) {
         this.$router.push({
           name: 'gameoverview',
           params: {
