@@ -126,7 +126,7 @@ function createGame(req, res) {
 
     let title = req.body.title || ''
     let description = req.body.description || ''
-    let cover = req.files.cover.data || ''
+    let cover = req.body.cover || ''
     let platform = req.body.platform || ''
     let genre = req.body.genre || ''
     let publisher = req.body.publisher || ''
@@ -142,7 +142,7 @@ function createGame(req, res) {
             const game = new Game({
                 title: title,
                 description: description,
-                cover: new Buffer(cover).toString('base64'),
+                cover: cover,
                 genre: genre,
                 platform: platform,
                 publisher: publisher,

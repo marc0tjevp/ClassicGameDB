@@ -2,8 +2,11 @@
   <div class="gameoverview text-left">
 
     <div class="row">
-      <div class="row-12">
+      <div class="col-10">
         <h2>{{ selectedGame.title }}</h2>
+      </div>
+      <div class="col-2">
+        <router-link tag="button" :to="'/games/edit/' + this.$route.params.id" type="button" class="btn btn-primary float-right">Edit</router-link>
       </div>
     </div>
 

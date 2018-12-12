@@ -2,11 +2,11 @@
   <div class="games">
 
     <div class="row">
-      <div class="col-10 align-right">
+      <div class="col-10">
         <h1>{{ $route.params.abb }} Games</h1>
       </div>
-      <div class="col-2 align-left">
-        <button type="button" class="btn btn-primary">Add Game</button>
+      <div class="col-2">
+        <router-link tag="button" to="/games/add" type="button" class="btn btn-primary">Add Game</router-link>
       </div>
     </div>
 

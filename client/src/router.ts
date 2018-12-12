@@ -22,6 +22,16 @@ export default new Router({
       component: () => import('./views/Games.vue'),
     },
     {
+      path: '/games/add',
+      name: 'addgame',
+      component: () => import('./views/GameAdd.vue'),
+    },
+    {
+      path: '/games/edit/:id',
+      name: 'editgame',
+      component: () => import('./views/GameEdit.vue'),
+    },
+    {
       path: '/platforms/:abb',
       name: 'gamesbyplatform',
       component: () => import('./views/Games.vue'),

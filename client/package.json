@@ -11,6 +11,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "vue": "^2.5.17",
+    "vue-base64-upload": "^1.0.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
