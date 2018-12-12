@@ -5,6 +5,8 @@
             <div class="row">
                 <div class="col-12">
 
+                    <h3>Add XP</h3>
+
                     <div class="form-group">
                         <label for="content">Message</label>
                         <textarea v-validate="'required|min:12'" name="content" type="text" id="content" class="form-control"
@@ -32,6 +34,7 @@
     import axios from 'axios'
 
     export default {
+
         props: ['token'],
 
         data() {
@@ -40,6 +43,14 @@
                     content: '',
                     rating: ''
                 }
+            }
+        },
+
+        mounted() {
+            if (!this.token) {
+                this.$router.push({
+                    name: 'login',
+                })
             }
         },
 
