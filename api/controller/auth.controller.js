@@ -67,7 +67,7 @@ function register(req, res) {
 
                 // If results, the username exists
                 if (count > 0) {
-                    res.status(412).json(new ApiResponse(412, "Username is already taken, sorry")).end()
+                    res.status(422).json(new ApiResponse(422, "Username is already taken, sorry")).end()
                 }
 
                 // Username is not taken yet, insert the new user
