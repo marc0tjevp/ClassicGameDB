@@ -91,7 +91,7 @@ function editGame(req, res) {
             User.findOne({
                 username: decodedUsername.sub
             }, function (error, foundUser) {
-                if (err) {
+                if (error) {
                     res.status(404).json("User does not exist").end()
                 } else {
                     // Save the game and changelog
@@ -106,7 +106,13 @@ function editGame(req, res) {
                                 oldgame: oldgame,
                                 newgame: game
                             })
-                            res.status(200).json("Updated").end()
+                            changelog.save(function (err) {
+                                if (err) {
+                                    res.status(500).json(err).end()
+                                } else {
+                                    res.status(200).json("Updated").end()
+                                }
+                            })
                         }
                     })
                 }
