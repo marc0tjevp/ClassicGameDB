@@ -60,6 +60,8 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: () => import('./components/Register.vue'),
-    }
+    },
+    { path: '/404', component: () => import('./components/NotFound.vue') },  
+    { path: '*', redirect: '/404' },  
   ],
 });

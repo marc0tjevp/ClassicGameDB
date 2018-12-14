@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <welcome />
-    <login v-if="!token" />
+    <login :isHomePage="true" v-if="!token" />
     <div v-else>
       <i>Welcome back {{ user.username }}!</i>
     </div>
@@ -29,29 +29,42 @@
       }
     },
 
+    methods: {
+      getUser() {
+        if (this.token) {
+          axios.get('https://classicgamedb.herokuapp.com/users', {
+              headers: {
+                Authorization: this.token
+              }
+            })
+            .then(response => {
+              this.user = response.data
+              console.log(this.user)
+            })
+            .catch(function (error) {
+              if (error.response) {
+                console.log(error.response);
+              }
+            })
+        }
+      }
+    },
+
+    watch: {
+      'token'(to, from) {
+        this.getUser()
+      }
+    },
+
     components: {
       Welcome,
       Login,
     },
 
-    created() {
-      if (this.token) {
-        axios.get('https://classicgamedb.herokuapp.com/users', {
-            headers: {
-              Authorization: this.token
-            }
-          })
-          .then(response => {
-            this.user = response.data
-            console.log(this.user)
-          })
-          .catch(function (error) {
-            if (error.response) {
-              console.log(error.response);
-            }
-          })
-      }
+    mounted() {
+      this.getUser();
     },
 
   })
+  
 </script>

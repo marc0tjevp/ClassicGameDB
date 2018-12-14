@@ -6,22 +6,19 @@
         <h2>{{ selectedGame.title }}</h2>
       </div>
       <div class="col-2">
-        <router-link tag="button" :to="'/games/edit/' + this.$route.params.id" type="button" class="btn btn-primary float-right">Edit</router-link>
+        <router-link tag="button" :to="'/games/edit/' + this.$route.params.id" type="button" class="btn btn-primary float-right">Edit Game</router-link>
       </div>
     </div>
 
     <div class="row">
+      
       <div class="col-4">
-        <img class="img-fluid float-left" :src="'data:image/png;base64,' + selectedGame.cover" />
+        <img class="img-fluid float-left" style="width:100%" :src="'data:image/png;base64,' + selectedGame.cover" />
       </div>
 
       <div class="col-8">
         <p>{{ selectedGame.description }}</p>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-12">
         <dl>
           <dt>Genre</dt>
           <dd>{{ selectedGame.genre }}</dd>
@@ -30,23 +27,25 @@
           <dd>{{ selectedGame.publisher }}</dd>
 
           <dt>Release Date</dt>
-          <dd>{{ selectedGame.releaseDate }}</dd>
-
+          <dd>{{ selectedGame.releaseDate | moment("DD-MM-YYYY") }}</dd>
         </dl>
+
       </div>
     </div>
 
     <div class="row">
       <div class="col-12">
-        <router-link tag="button" :to="'/games/xp/' + this.$route.params.id" type="button" class="btn btn-primary float-right">Add your XP!</router-link>
+        <router-link tag="button" :to="'/games/xp/' + this.$route.params.id" type="button" class="btn btn-primary float-right">Add
+          your XP!</router-link>
       </div>
       <div class="col-12">
-        <div v-for="(data, index) in selectedGame.experiences" :key="index" class="card">
+        <div v-for="(data, index) in selectedGame.experiences" :key="index" class="card shadow">
           <div class="card-body">
             <blockquote>
               <p>{{ data.content }}</p>
               <p>Rating: {{ data.rating }}</p>
-              <footer class="blockquote-footer">By {{ data.user.username }} on <cite>{{ data.date }}</cite></footer>
+              <footer class="blockquote-footer">By {{ data.user.username }} on <cite>{{ data.date |
+                  moment("DD-MM-YYYY") }}</cite></footer>
             </blockquote>
           </div>
         </div>
@@ -108,5 +107,13 @@
 <style scoped>
   .card {
     margin-bottom: 15px;
+  }
+
+  .row {
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    margin-bottom: 10px;
   }
 </style>

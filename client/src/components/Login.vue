@@ -1,7 +1,7 @@
 <template>
     <div class="login">
 
-        <h3 class="text-center">Login</h3>
+        <h3>Login</h3>
 
         <form @submit.prevent="login">
 
@@ -40,7 +40,7 @@
 
     export default {
 
-        props: ['token'],
+        props: ['token', 'isHomePage'],
 
         data() {
             return {
@@ -72,7 +72,11 @@
                         .then(function (response) {
                             var newtoken = response.data.message
                             this.$cookie.set('auth', newtoken, 1);
-                            this.$router.go(0);
+                            if (this.isHomePage) {
+                                this.$router.go(0);
+                            } else {
+                                this.$router.go(-1);
+                            }
                         }.bind(this))
                         .catch(function (error) {
                             console.log(error);

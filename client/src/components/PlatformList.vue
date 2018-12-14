@@ -3,7 +3,7 @@
 
     <div v-if="platforms.length > 0" class="row">
       <div class="col-4" v-for="(data, index) in platforms" :key="index" @click="overview(data.abb)">
-        <div class="card">
+        <div class="card shadow">
           <img class="card-img-top" style="padding: 10%;" :src="'data:image/png;base64,' + data.image" />
           <div class="card-body">
             <h5 class="card-title">

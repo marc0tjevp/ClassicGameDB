@@ -6,7 +6,7 @@
         <h1>{{ $route.params.abb }} Games</h1>
       </div>
       <div class="col-2">
-        <router-link tag="button" to="/games/add" type="button" class="btn btn-primary">Add Game</router-link>
+        <router-link tag="button" to="/games/add" type="button" class="btn float-right btn-primary">Add Game</router-link>
       </div>
     </div>
 

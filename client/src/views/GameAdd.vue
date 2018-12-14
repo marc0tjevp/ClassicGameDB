@@ -59,7 +59,7 @@
                             v-model="game.releaseDate" />
                         {{ errors.first('releaseDate') }}
                     </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" style='margin-top: 15px;' class="btn w-100 btn-primary">Save</button>
                 </div>
             </div>
 

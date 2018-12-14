@@ -15,8 +15,7 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="cover">Cover</label>
-                        <img class="img-fluid" :src="'data:image/png;base64,' + game.cover" />
+                        <img class="img-fluid" style="width: 100%" :src="'data:image/png;base64,' + game.cover" />
                     </div>
                 </div>
                 <div class="col-8">
@@ -52,12 +51,6 @@
                         {{ errors.first('genre') }}
                     </div>
 
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-
                     <div class="form-group">
                         <label for="publisher">Publisher</label>
                         <input :disabled="this.token < 1" v-validate="'required|min:3'" name="publisher" type="text" id="publisher"
@@ -71,7 +64,8 @@
                             class="form-control" v-model="game.releaseDate" />
                         {{ errors.first('releaseDate') }}
                     </div>
-                    <button :disabled="this.token < 1" type="submit" class="btn btn-primary">Save</button>
+                    <button :disabled="this.token < 1" type="submit" style="width:100%; margin-top:15px;" class="btn btn-primary">Save</button>
+
                 </div>
             </div>
 
@@ -115,6 +109,15 @@
 
         methods: {
 
+            overview(id) {
+                this.$router.push({
+                    name: 'gameoverview',
+                    params: {
+                        id: id
+                    }
+                })
+            },
+
             loadGame() {
                 axios.get(this.url)
                     .then(response => {
@@ -155,8 +158,8 @@
                             }
                         })
                         .then(function (response) {
-                            self.$router.push('../');
-                        })
+                            this.overview(this.game._id)
+                        }.bind(this))
                         .catch(function (error) {
                             console.log(error);
                         });
