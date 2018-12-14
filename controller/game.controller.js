@@ -3,6 +3,7 @@ const User = require('../model/schema/user.schema').User
 const ApiResponse = require('../model/response/api.response')
 const Platform = require('../model/schema/platform.schema')
 const Changelog = require('../model/schema/changelog.schema').Changelog
+const auth = require('../config/authentication.config')
 
 function getAllGames(req, res) {
     Game.find({}, function (err, games) {
