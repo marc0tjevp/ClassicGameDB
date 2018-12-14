@@ -11,8 +11,8 @@
 <script lang="ts">
   import Vue from 'vue';
   import Login from '@/components/Login.vue';
-  import Welcome from '@/components/Welcome.vue'
-  import axios from 'axios'
+  import Welcome from '@/components/Welcome.vue';
+  import axios from 'axios';
 
   export default Vue.extend({
 
@@ -24,9 +24,9 @@
       return {
         user: {
           _id: '',
-          username: ''
-        }
-      }
+          username: '',
+        },
+      };
     },
 
     methods: {
@@ -34,26 +34,26 @@
         if (this.token) {
           axios.get('https://classicgamedb.herokuapp.com/users', {
               headers: {
-                Authorization: this.token
-              }
+                Authorization: this.token,
+              },
             })
-            .then(response => {
-              this.user = response.data
-              console.log(this.user)
+            .then((response) => {
+              this.user = response.data;
+              console.log(this.user);
             })
-            .catch(function (error) {
+            .catch((error) => {
               if (error.response) {
                 console.log(error.response);
               }
-            })
+            });
         }
-      }
+      },
     },
 
     watch: {
-      'token'(to, from) {
-        this.getUser()
-      }
+      token(to, from) {
+        this.getUser();
+      },
     },
 
     components: {
@@ -65,6 +65,5 @@
       this.getUser();
     },
 
-  })
-  
+  });
 </script>

@@ -80,13 +80,13 @@
 </template>
 
 <script>
-    import axios from 'axios'
-    import Base64Upload from 'vue-base64-upload'
+    import axios from 'axios';
+    import Base64Upload from 'vue-base64-upload';
 
     export default {
 
         components: {
-            Base64Upload
+            Base64Upload,
         },
 
         props: ['token'],
@@ -101,10 +101,10 @@
                     platform: '',
                     genre: '',
                     publisher: '',
-                    releaseDate: ''
+                    releaseDate: '',
                 },
-                url: 'https://classicgamedb.herokuapp.com/games/' + this.$route.params.id
-            }
+                url: 'https://classicgamedb.herokuapp.com/games/' + this.$route.params.id,
+            };
         },
 
         methods: {
@@ -112,28 +112,26 @@
             overview(id) {
                 this.$router.push({
                     name: 'gameoverview',
-                    params: {
-                        id: id
-                    }
-                })
+                    params: { id },
+                });
             },
 
             loadGame() {
                 axios.get(this.url)
-                    .then(response => {
-                        this.game = response.data
-                        console.log(response.data)
+                    .then((response) => {
+                        this.game = response.data;
+                        console.log(response.data);
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         if (error.response) {
                             console.log(error.response);
                         }
-                    })
+                    });
             },
 
             handleSubmit() {
 
-                const self = this
+                const self = this;
 
                 this.$validator.validateAll().then((result) => {
 
@@ -151,28 +149,28 @@
                             genre: this.game.genre,
                             platform: this.game.platform,
                             publisher: this.game.publisher,
-                            releaseDate: this.game.releaseDate
+                            releaseDate: this.game.releaseDate,
                         }, {
                             headers: {
-                                Authorization: this.token
-                            }
+                                Authorization: this.token,
+                            },
                         })
-                        .then(function (response) {
-                            this.overview(this.game._id)
+                        .then(function(response) {
+                            this.overview(this.game._id);
                         }.bind(this))
-                        .catch(function (error) {
+                        .catch((error) => {
                             console.log(error);
                         });
 
                 }).catch(() => {
-                    console.log(":(")
+                    console.log(':(');
                 });
-            }
+            },
         },
 
         mounted() {
-            this.loadGame()
+            this.loadGame();
         },
 
-    }
+    };
 </script>

@@ -66,18 +66,18 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import axios from 'axios'
+  import axios from 'axios';
 
   export default Vue.extend({
 
     name: 'gameoverview',
 
     watch: {
-      '$route'(to, from) {
-        console.log(to)
-        this.url = 'https://classicgamedb.herokuapp.com/games/' + to.params.id
+      $route(to, from) {
+        console.log(to);
+        this.url = 'https://classicgamedb.herokuapp.com/games/' + to.params.id;
         this.getGame();
-      }
+      },
     },
 
     data() {
@@ -91,10 +91,10 @@
           genre: '',
           platform: '',
           publisher: '',
-          releaseDate: ''
+          releaseDate: '',
         },
-        url: 'https://classicgamedb.herokuapp.com/games/' + this.$route.params.id
-      }
+        url: 'https://classicgamedb.herokuapp.com/games/' + this.$route.params.id,
+      };
     },
 
     methods: {
@@ -102,25 +102,25 @@
       getGame() {
 
         axios.get(this.url)
-          .then(response => {
-            this.selectedGame = response.data
+          .then((response) => {
+            this.selectedGame = response.data;
           })
           .catch((error: any) => {
             if (error.response) {
-              if (error.response.status == 500) {
+              if (error.response.status === 500) {
                 this.$router.push('../404');
               }
               console.log(error.response);
             }
-          })
-      }
+          });
+      },
     },
 
     mounted() {
-      this.getGame()
+      this.getGame();
     },
 
-  })
+  });
 </script>
 
 <style scoped>

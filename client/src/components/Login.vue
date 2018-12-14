@@ -35,7 +35,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from 'axios';
     import izitoast from 'izitoast';
 
     export default {
@@ -48,14 +48,14 @@
                     username: '',
                     password: '',
                 },
-            }
+            };
         },
 
         methods: {
 
             login() {
 
-                const self = this
+                const self = this;
 
                 this.$validator.validateAll().then((result) => {
 
@@ -69,14 +69,14 @@
                             username: this.user.username,
                             password: this.user.password,
                         })
-                        .then(function (response) {
-                            var newtoken = response.data.message
+                        .then(function(response) {
+                            const newtoken = response.data.message;
                             this.$cookie.set('auth', newtoken, 1);
                             this.$router.go(0);
                         }.bind(this))
-                        .catch(function (error) {
+                        .catch((error) => {
                             console.log(error);
-                            if (error.response.status == 401) {
+                            if (error.response.status === 401) {
                                 izitoast.show({
                                     title: ' ',
                                     message: 'Wrong Credentials',
@@ -88,7 +88,7 @@
                                     timeout: 2000,
                                 });
                             } else
-                            if (error.response.status == 404) {
+                            if (error.response.status === 404) {
                                 izitoast.show({
                                     title: ' ',
                                     message: 'Username does not exist, consider creating an account',
@@ -111,15 +111,12 @@
                                     timeout: 2000,
                                 });
                             }
-                        })
+                        });
 
                 }).catch(() => {
-                    console.log(":(")
+                    console.log(':(');
                 });
-
-            }
-
-        }
-
-    }
+            },
+        },
+    };
 </script>

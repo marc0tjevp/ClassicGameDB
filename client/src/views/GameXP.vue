@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from 'axios';
 
     export default {
 
@@ -41,16 +41,16 @@
             return {
                 xp: {
                     content: '',
-                    rating: ''
-                }
-            }
+                    rating: '',
+                },
+            };
         },
 
         mounted() {
             if (!this.token) {
                 this.$router.push({
                     name: 'login',
-                })
+                });
             }
         },
 
@@ -59,10 +59,8 @@
             overview(id) {
                 this.$router.push({
                     name: 'gameoverview',
-                    params: {
-                        id: id
-                    }
-                })
+                    params: { id },
+                });
             },
 
             handleSubmit() {
@@ -77,25 +75,24 @@
                     // Post the game
                     axios.post('https://classicgamedb.herokuapp.com/games/' + this.$route.params.id + '/experience', {
                             content: this.xp.content,
-                            rating: this.xp.rating
-
+                            rating: this.xp.rating,
                         }, {
                             headers: {
-                                Authorization: this.token
-                            }
+                                Authorization: this.token,
+                            },
                         })
-                        .then(function (response) {
-                            this.overview(this.$route.params.id)
+                        .then(function(response) {
+                            this.overview(this.$route.params.id);
                             console.log(response);
                         }.bind(this))
-                        .catch(function (error) {
+                        .catch((error) => {
                             console.log(error);
-                        })
+                        });
                 }).catch(() => {
-                    console.log(":(")
+                    console.log(':(');
                 });
 
-            }
+            },
         },
-    }
+    };
 </script>

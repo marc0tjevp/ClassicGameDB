@@ -24,5 +24,5 @@
     components: {
       GamesList,
     },
-  })
+  });
 </script>

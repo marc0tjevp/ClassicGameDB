@@ -68,13 +68,13 @@
 </template>
 
 <script>
-    import axios from 'axios'
-    import Base64Upload from 'vue-base64-upload'
+    import axios from 'axios';
+    import Base64Upload from 'vue-base64-upload';
 
     export default {
 
         components: {
-            Base64Upload
+            Base64Upload,
         },
 
         props: ['token'],
@@ -89,9 +89,9 @@
                     platform: '',
                     genre: '',
                     publisher: '',
-                    releaseDate: ''
-                }
-            }
+                    releaseDate: '',
+                },
+            };
         },
 
         methods: {
@@ -99,27 +99,25 @@
             overview(id) {
                 this.$router.push({
                     name: 'gameoverview',
-                    params: {
-                        id: id
-                    }
-                })
+                    params: { id },
+                });
             },
 
             onChangeImage(file) {
-                this.game.cover = file.base64
+                this.game.cover = file.base64;
             },
 
             loadPlatforms() {
                 axios.get('https://classicgamedb.herokuapp.com/platforms')
-                    .then(response => {
-                        this.platforms = response.data
-                        console.log(response.data)
+                    .then((response) => {
+                        this.platforms = response.data;
+                        console.log(response.data);
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         if (error.response) {
                             console.log(error.response);
                         }
-                    })
+                    });
             },
 
             handleSubmit() {
@@ -139,33 +137,33 @@
                             genre: this.game.genre,
                             platform: this.game.platform,
                             publisher: this.game.publisher,
-                            releaseDate: this.game.releaseDate
+                            releaseDate: this.game.releaseDate,
                         }, {
                             headers: {
-                                Authorization: this.token
-                            }
+                                Authorization: this.token,
+                            },
                         })
-                        .then(function (response) {
-                            this.overview(response.data._id)
+                        .then(function(response) {
+                            this.overview(response.data._id);
                             console.log(response);
                         }.bind(this))
-                        .catch(function (error) {
+                        .catch((error) => {
                             console.log(error);
-                        })
+                        });
                 }).catch(() => {
-                    console.log(":(")
+                    console.log(':(');
                 });
 
-            }
+            },
         },
 
         mounted() {
             if (!this.token) {
                 this.$router.push({
                     name: 'login',
-                })
+                });
             }
-            this.loadPlatforms()
-        }
-    }
+            this.loadPlatforms();
+        },
+    };
 </script>

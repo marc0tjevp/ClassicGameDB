@@ -2,7 +2,7 @@
   <div id="app">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Classic Games Database</a>
+      <a class="navbar-brand">Classic Games Database</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -11,19 +11,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <router-link class="nav-link" to="/">Home</router-link>
+            <router-link active-class="active" class="nav-link" to="/" exact><i class="fas fa-home"></i> Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/games">Games</router-link>
+            <router-link active-class="active" class="nav-link" to="/games"><i class="fas fa-gamepad"></i> Games</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/platforms">Platforms</router-link>
+            <router-link active-class="active" class="nav-link" to="/platforms"><i class="fas fa-microchip"></i> Platforms</router-link>
           </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item" v-if="loggedin">
-            <a class="nav-link clickable" @click="logout()">Log out</a>
+          <li v-if="loggedin" class="nav-item">
+            <a class="nav-link clickable" @click="logout()"><i class="fas fa-sign-out-alt"></i> Log out</a>
           </li>
+          <li v-else class="nav-item">
+            <router-link to="login" class="nav-link"><i class="fas fa-sign-in-alt"></i> Log In</router-link>
+          </li>
+          
         </ul>
       </div>
     </nav>
@@ -46,54 +50,51 @@
       return {
         token: '',
         loggedin: false,
-      }
+      };
     },
 
     watch: {
-      'token'(to, from) {
-
-        // Log
-        console.log('new token found: ' + to)
+      token(to, from) {
 
         // Set the new token
-        this.getToken()
+        this.getToken();
 
         // Check if logged in
         if (this.token.length > 0) {
-          this.loggedin = true
+          this.loggedin = true;
         } else {
-          this.loggedin = false
+          this.loggedin = false;
         }
 
-      }
+      },
     },
 
     mounted() {
-      this.getToken()
+      this.getToken();
     },
 
     methods: {
 
       logout() {
-        const self: any = this
+        const self: any = this;
         self.$cookie.delete('auth');
-        this.token = ''
+        this.token = '';
       },
 
       getToken() {
 
-        const self: any = this
+        const self: any = this;
 
         // Get token from cookie
-        var cookie = self.$cookie.get('auth');
+        const cookie = self.$cookie.get('auth');
 
-        this.token = cookie || ''
+        this.token = cookie || '';
 
-      }
+      },
 
-    }
+    },
 
-  })
+  });
 </script>
 
 <style>
@@ -111,7 +112,15 @@
   }
 
   .table tbody {
-        background-color: #263238;
+    background-color: #263238;
+  }
+  
+  .nav-link i {
+    margin-right: 7.5px;
+  }
+
+  .nav-link {
+    margin-right: 15px;
   }
 
   .card {
@@ -154,6 +163,7 @@
   .navbar {
     margin-bottom: 50px;
     background-color: #222D32 !important;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   }
 
   .clickable {
@@ -173,19 +183,5 @@
 
   .table-hover tbody tr:hover {
     background-color: rgba(155, 159, 163, 0.55)
-  }
-
-  #nav {
-    padding: 30px;
-    text-align: center;
-  }
-
-  #nav a {
-    font-weight: bold;
-    color: #fafafa;
-  }
-
-  .nav-link a.router-link-exact-active {
-    color: #42b983;
   }
 </style>

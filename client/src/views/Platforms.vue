@@ -1,7 +1,7 @@
 <template>
   <div class="platform">
     <h1>Platforms</h1>
-    <PlatformList/>
+    <PlatformList />
   </div>
 </template>
 
@@ -9,10 +9,10 @@
   import Vue from 'vue';
   import PlatformList from '@/components/PlatformList.vue';
 
-export default Vue.extend({
-  name: 'home',
-  components: {
-    PlatformList,
-  },
-})
+  export default Vue.extend({
+    name: 'home',
+    components: {
+      PlatformList,
+    },
+  });
 </script>

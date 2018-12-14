@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from 'axios';
     import izitoast from 'izitoast';
 
     export default {
@@ -35,15 +35,14 @@
                     username: '',
                     password: '',
                 },
-
-            }
+            };
         },
 
         methods: {
 
             register() {
 
-                const self = this
+                const self = this;
 
                 this.$validator.validateAll().then((result) => {
 
@@ -57,11 +56,11 @@
                             username: this.user.username,
                             password: this.user.password,
                         })
-                        .then(function (response) {
+                        .then(function(response) {
                             this.$router.push('games');
                         }.bind(this))
-                        .catch(function (error) {
-                            if (error.response.status == 422) {
+                        .catch((error) => {
+                            if (error.response.status === 422) {
                                 izitoast.show({
                                     title: ' ',
                                     message: 'This username is already taken, is someone trying to impersonate you? :o',
@@ -74,15 +73,13 @@
                                 });
                                 console.log(error);
                             }
-                        })
+                        });
 
                 }).catch(() => {
-                    console.log(":(")
+                    console.log(':(');
                 });
 
-            }
-
-        }
-
-    }
+            },
+        },
+    };
 </script>

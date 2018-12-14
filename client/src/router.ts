@@ -61,7 +61,7 @@ export default new Router({
       name: 'register',
       component: () => import('./components/Register.vue'),
     },
-    { path: '/404', name: "notfound", component: () => import('./components/NotFound.vue') },  
-    { path: '*', redirect: '/404' },  
+    { path: '/404', name: 'notfound', component: () => import('./components/NotFound.vue') },
+    { path: '*', redirect: '/404' },
   ],
 });

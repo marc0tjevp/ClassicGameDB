@@ -46,13 +46,13 @@
 </template>
 
 <script>
-    import axios from 'axios'
-    import Base64Upload from 'vue-base64-upload'
+    import axios from 'axios';
+    import Base64Upload from 'vue-base64-upload';
 
     export default {
 
         components: {
-            Base64Upload
+            Base64Upload,
         },
 
         props: ['token'],
@@ -63,21 +63,21 @@
                     image: '',
                     abb: '',
                     name: '',
-                    description: ''
-                }
-            }
+                    description: '',
+                },
+            };
         },
 
         methods: {
 
             overview(id) {
                 this.$router.push({
-                    name: 'platforms'
-                })
+                    name: 'platforms',
+                });
             },
 
             onChangeImage(file) {
-                this.platform.image = file.base64
+                this.platform.image = file.base64;
             },
 
             handleSubmit() {
@@ -94,33 +94,32 @@
                             image: this.platform.image,
                             name: this.platform.name,
                             abb: this.platform.abb,
-                            description: this.platform.description
-
+                            description: this.platform.description,
                         }, {
                             headers: {
-                                Authorization: this.token
-                            }
+                                Authorization: this.token,
+                            },
                         })
-                        .then(function (response) {
-                            this.overview(response.data._id)
+                        .then(function(response) {
+                            this.overview(response.data._id);
                             console.log(response);
                         }.bind(this))
-                        .catch(function (error) {
+                        .catch((error) => {
                             console.log(error);
-                        })
+                        });
                 }).catch(() => {
-                    console.log(":(")
+                    console.log(':(');
                 });
 
-            }
+            },
         },
 
         mounted() {
             if (!this.token) {
                 this.$router.push({
                     name: 'login',
-                })
+                });
             }
-        }
-    }
+        },
+    };
 </script>

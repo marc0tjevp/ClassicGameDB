@@ -29,7 +29,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import axios from 'axios'
+  import axios from 'axios';
 
   export default Vue.extend({
 
@@ -40,18 +40,18 @@
         games: [],
         url: () => {
           if (this.$route.params.abb) {
-            return 'https://classicgamedb.herokuapp.com/games/platform/' + this.$route.params.abb
+            return 'https://classicgamedb.herokuapp.com/games/platform/' + this.$route.params.abb;
           } else {
-            return 'https://classicgamedb.herokuapp.com/games'
+            return 'https://classicgamedb.herokuapp.com/games';
           }
-        }
-      }
+        },
+      };
     },
 
     watch: {
-      '$route'(to, from) {
-        this.loadGames()
-      }
+      $route(to, from) {
+        this.loadGames();
+      },
     },
 
     methods: {
@@ -59,28 +59,25 @@
       overview(id: any) {
         this.$router.push({
           name: 'gameoverview',
-          params: {
-            id: id
-          }
-        })
+          params: { id },
+        });
       },
 
       loadGames() {
         axios.get(this.url())
-          .then(response => {
-            this.games = response.data
+          .then((response) => {
+            this.games = response.data;
           })
-          .catch(function (error) {
+          .catch((error) => {
             if (error.response) {
               console.log(error.response);
             }
-          })
-      }
-
+          });
+      },
     },
 
     mounted() {
-      this.loadGames()
+      this.loadGames();
     },
 
   });
