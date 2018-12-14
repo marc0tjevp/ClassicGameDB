@@ -1,43 +1,52 @@
 <template>
   <div class="gameoverview text-left">
 
+    <div class="game">
+      <div class="row">
+        <div class="col-10">
+          <h2>{{ selectedGame.title }}</h2>
+        </div>
+        <div class="col-2">
+          <router-link tag="button" :to="'/games/edit/' + this.$route.params.id" type="button" class="btn btn-primary float-right">Edit
+            Game</router-link>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-4">
+          <img class="img-fluid float-left w-100" :src="'data:image/png;base64,' + selectedGame.cover" />
+        </div>
+
+        <div class="col-8">
+          <p>{{ selectedGame.description }}</p>
+
+          <dl>
+            <dt>Genre</dt>
+            <dd>{{ selectedGame.genre }}</dd>
+
+            <dt>Publisher</dt>
+            <dd>{{ selectedGame.publisher }}</dd>
+
+            <dt>Release Date</dt>
+            <dd>{{ selectedGame.releaseDate | moment("DD-MM-YYYY") }}</dd>
+          </dl>
+
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-10">
-        <h2>{{ selectedGame.title }}</h2>
+        <h2>Experiences</h2>
       </div>
       <div class="col-2">
-        <router-link tag="button" :to="'/games/edit/' + this.$route.params.id" type="button" class="btn btn-primary float-right">Edit Game</router-link>
-      </div>
-    </div>
-
-    <div class="row">
-      
-      <div class="col-4">
-        <img class="img-fluid float-left" style="width:100%" :src="'data:image/png;base64,' + selectedGame.cover" />
-      </div>
-
-      <div class="col-8">
-        <p>{{ selectedGame.description }}</p>
-
-        <dl>
-          <dt>Genre</dt>
-          <dd>{{ selectedGame.genre }}</dd>
-
-          <dt>Publisher</dt>
-          <dd>{{ selectedGame.publisher }}</dd>
-
-          <dt>Release Date</dt>
-          <dd>{{ selectedGame.releaseDate | moment("DD-MM-YYYY") }}</dd>
-        </dl>
-
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-12">
         <router-link tag="button" :to="'/games/xp/' + this.$route.params.id" type="button" class="btn btn-primary float-right">Add
           your XP!</router-link>
       </div>
+    </div>
+
+    <div class="row">
       <div class="col-12">
         <div v-for="(data, index) in selectedGame.experiences" :key="index" class="card shadow">
           <div class="card-body">
@@ -52,7 +61,6 @@
       </div>
     </div>
 
-
   </div>
 </template>
 
@@ -66,7 +74,9 @@
 
     watch: {
       '$route'(to, from) {
-        console.log(to.params.id)
+        console.log(to)
+        this.url = 'https://classicgamedb.herokuapp.com/games/' + to.params.id
+        this.getGame();
       }
     },
 
@@ -84,6 +94,23 @@
           releaseDate: ''
         },
         url: 'https://classicgamedb.herokuapp.com/games/' + this.$route.params.id
+      }
+    },
+
+    methods: {
+      getGame() {
+        axios.get(this.url)
+          .then(response => {
+            this.selectedGame = response.data
+          })
+          .catch(function (error) {
+            if (error.response) {
+              if (error.response.status == 500) {
+                this.$router.push('../404');
+              }
+              console.log(error.response);
+            }
+          }.bind(this))
       }
     },
 
@@ -107,6 +134,10 @@
 <style scoped>
   .card {
     margin-bottom: 15px;
+  }
+
+  .game {
+    margin-bottom: 40px;
   }
 
   .row {

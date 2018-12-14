@@ -13,8 +13,8 @@ Node.JS + MongoDB + Vue.JS
 The Vue client uses the Heroku links per default.
 
 ### TODO
-- [ ] Proper redirecting after login/logout
-- [ ] Check if a platform exists before requesting
+- [ X ] Proper redirecting after login/logout
+- [ X ] Check if a platform exists before requesting
 - [ X ] A 404 page
-- [ ] Bit of styling
+- [ X ] Bit of styling
 - [ X ] Date Formatting

@@ -106,6 +106,14 @@
     color: #fafafa;
   }
 
+  .table thead {
+    background-color: #222D32;
+  }
+
+  .table tbody {
+        background-color: #263238;
+  }
+
   .card {
     background-color: #222d32;
   }
