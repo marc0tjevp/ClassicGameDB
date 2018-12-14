@@ -72,11 +72,7 @@
                         .then(function (response) {
                             var newtoken = response.data.message
                             this.$cookie.set('auth', newtoken, 1);
-                            if (this.isHomePage) {
-                                this.$router.go(0);
-                            } else {
-                                this.$router.go(-1);
-                            }
+                            this.$router.go(0);
                         }.bind(this))
                         .catch(function (error) {
                             console.log(error);

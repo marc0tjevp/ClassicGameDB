@@ -98,34 +98,26 @@
     },
 
     methods: {
+
       getGame() {
+
         axios.get(this.url)
           .then(response => {
             this.selectedGame = response.data
           })
-          .catch(function (error) {
+          .catch((error: any) => {
             if (error.response) {
               if (error.response.status == 500) {
                 this.$router.push('../404');
               }
               console.log(error.response);
             }
-          }.bind(this))
+          })
       }
     },
 
     mounted() {
-
-      axios.get(this.url)
-        .then(response => {
-          this.selectedGame = response.data
-        })
-        .catch(function (error) {
-          if (error.response) {
-            console.log(error.response);
-          }
-        })
-
+      this.getGame()
     },
 
   })
