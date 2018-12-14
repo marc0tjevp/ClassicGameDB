@@ -1,7 +1,8 @@
 const Game = require('../model/schema/game.schema').Game
-const Experience = require('../model/schema/experience.schema').Experience
+const User = require('../model/schema/user.schema').User
 const ApiResponse = require('../model/response/api.response')
 const Platform = require('../model/schema/platform.schema')
+const Changelog = require('../model/schema/changelog.schema').Changelog
 
 function getAllGames(req, res) {
     Game.find({}, function (err, games) {
@@ -30,9 +31,11 @@ function getGameByID(req, res) {
             if (err) {
                 res.status(500).json(err).end()
             }
-        }).populate('experiences.user', {password: 0}).exec(function (err, game) {
-            res.status(200).json(game).end()
-        })
+        }).populate('experiences.user', {
+        password: 0
+    }).exec(function (err, game) {
+        res.status(200).json(game).end()
+    })
 }
 
 function editGame(req, res) {
@@ -66,6 +69,9 @@ function editGame(req, res) {
             let publisher = req.body.publisher || game.publisher
             let releaseDate = req.body.releaseDate || game.releaseDate
 
+            // Remember the old game
+            let oldgame = game;
+
             // Set new params if present
             game.title = title
             game.description = description
@@ -74,15 +80,36 @@ function editGame(req, res) {
             game.publisher = publisher
             game.releaseDate = releaseDate
 
-            // Save the game
-            game.save(function (err) {
+            // Get User
+            var token = req.get('Authorization') || ''
+            var decodedUsername
+            if (token != '') {
+                decodedUsername = auth.decodeToken(token)
+            }
+
+            User.findOne({
+                username: decodedUsername.sub
+            }, function (error, foundUser) {
                 if (err) {
-                    res.status(500).json(err).end()
+                    res.status(404).json("User does not exist").end()
                 } else {
-                    res.status(200).json("Updated").end()
+                    // Save the game and changelog
+                    game.save(function (err) {
+                        if (err) {
+                            res.status(500).json(err).end()
+                        } else {
+                            const changelog = new Changelog({
+                                user: foundUser._id,
+                                game: game._id,
+                                date: new Date(),
+                                oldgame: oldgame,
+                                newgame: game
+                            })
+                            res.status(200).json("Updated").end()
+                        }
+                    })
                 }
             })
-
         })
 }
 
@@ -97,29 +124,29 @@ function getAllGamesByPlatform(req, res) {
     }
 
     Platform.findOne({
-        abb: abb
-    },
-    function (err, platform) {
-
-        if (err) {
-            res.status(500).json(err).end()
-        }
-
-        if (!platform) {
-            res.status(404).json("Platform does not exist").end()
-        }
-
-        Game.find({
-            platform: platform._id
+            abb: abb
         },
-        function (err, games) {
+        function (err, platform) {
+
             if (err) {
                 res.status(500).json(err).end()
-            } else {
-                res.status(200).json(games).end()
             }
+
+            if (!platform) {
+                res.status(404).json("Platform does not exist").end()
+            }
+
+            Game.find({
+                    platform: platform._id
+                },
+                function (err, games) {
+                    if (err) {
+                        res.status(500).json(err).end()
+                    } else {
+                        res.status(200).json(games).end()
+                    }
+                })
         })
-    })
 }
 
 function createGame(req, res) {
