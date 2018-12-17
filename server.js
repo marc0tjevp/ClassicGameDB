@@ -29,7 +29,8 @@ console.log(boxen('ClassicGameDB API', {
 var mongoose = require('mongoose')
 
 mongoose.connect(process.env.MONGO || config.databases.mongo, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useCreateIndex: true
 })
 
 var db = mongoose.connection
@@ -38,9 +39,6 @@ db.on('error', console.error.bind(console, 'Could not connect to ' + process.env
 
 db.once('open', function () {
   console.log('Mongoose: Connected to Mongo Database: ' + process.env.MONGO || config.databases.mongo)
-  db.db.stats(function (err, stats) {
-    console.log(stats);
-  })
 })
 
 // Use
@@ -52,7 +50,7 @@ app.use(bodyParser.json({
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-app.use(morgan(':method :url :status :response-time ms - :res[content-length]'))
+// app.use(morgan(':method :url :status :response-time ms - :res[content-length]'))
 
 // Route Imports
 const gameroutes = require('./routes/game.routes')

@@ -1,4 +1,4 @@
-const Platform = require('../model/schema/platform.schema')
+const Platform = require('../model/schema/platform.schema').Platform
 const ApiResponse = require('../model/response/api.response')
 
 function getAllPlatforms(req, res) {
@@ -28,8 +28,6 @@ function createPlatform(req, res) {
         description, description,
         image: image
     })
-
-    console.log(platform)
 
     platform.save(function (err) {
         if (err) {

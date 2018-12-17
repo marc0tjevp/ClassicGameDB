@@ -35,7 +35,7 @@ function login(req, res) {
 
                 // If the users password was not correct, return a message
                 else {
-                    res.status(401).json(new ApiResponse(412, "Incorrect credentials")).end()
+                    res.status(401).json(new ApiResponse(401, "Incorrect credentials")).end()
                 }
 
             }

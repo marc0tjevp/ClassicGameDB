@@ -1,7 +1,7 @@
 const Game = require('../model/schema/game.schema').Game
 const User = require('../model/schema/user.schema').User
 const ApiResponse = require('../model/response/api.response')
-const Platform = require('../model/schema/platform.schema')
+const Platform = require('../model/schema/platform.schema').Platform
 const Changelog = require('../model/schema/changelog.schema').Changelog
 const auth = require('../config/authentication.config')
 

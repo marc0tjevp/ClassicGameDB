@@ -28,4 +28,7 @@ var platformSchema = new Schema({
 
 const Platform = mongoose.model('platform', platformSchema)
 
-module.exports = Platform
+module.exports = {
+    Platform,
+    platformSchema
+}
