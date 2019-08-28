@@ -1,0 +1,9 @@
+
+{
+    "port": 8080,
+    "secret": "XxX_confidentialpantsu420!_XxX",
+    "databases": {
+        "mongo": "mongodb://localhost/cgdb",
+        "mongotest": "mongodb://localhost/cgdb"
+    }
+}
