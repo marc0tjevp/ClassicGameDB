@@ -75,7 +75,7 @@
     watch: {
       $route(to, from) {
         console.log(to);
-        this.url = 'https://classicgamedb.herokuapp.com/games/' + to.params.id;
+        this.url = 'http://localhost:8080/games/' + to.params.id;
         this.getGame();
       },
     },
@@ -93,7 +93,7 @@
           publisher: '',
           releaseDate: '',
         },
-        url: 'https://classicgamedb.herokuapp.com/games/' + this.$route.params.id,
+        url: 'http://localhost:8080/games/' + this.$route.params.id,
       };
     },
 

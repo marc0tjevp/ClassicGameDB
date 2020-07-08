@@ -90,7 +90,7 @@
                     }
 
                     // Post the game
-                    axios.post('https://classicgamedb.herokuapp.com/platforms', {
+                    axios.post('http://localhost:8080/platforms', {
                             image: this.platform.image,
                             name: this.platform.name,
                             abb: this.platform.abb,

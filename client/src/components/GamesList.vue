@@ -40,9 +40,9 @@
         games: [],
         url: () => {
           if (this.$route.params.abb) {
-            return 'https://classicgamedb.herokuapp.com/games/platform/' + this.$route.params.abb;
+            return 'http://localhost:8080/games/platform/' + this.$route.params.abb;
           } else {
-            return 'https://classicgamedb.herokuapp.com/games';
+            return 'http://localhost:8080/games';
           }
         },
       };

@@ -42,7 +42,7 @@
     data() {
       return {
         platforms: [],
-        url: 'https://classicgamedb.herokuapp.com/platforms',
+        url: 'http://localhost:8080/platforms',
       };
     },
 

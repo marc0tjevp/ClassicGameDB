@@ -32,7 +32,7 @@
     methods: {
       getUser() {
         if (this.token) {
-          axios.get('https://classicgamedb.herokuapp.com/users', {
+          axios.get('http://localhost:8080/users', {
               headers: {
                 Authorization: this.token,
               },

@@ -73,7 +73,7 @@
                     }
 
                     // Post the game
-                    axios.post('https://classicgamedb.herokuapp.com/games/' + this.$route.params.id + '/experience', {
+                    axios.post('http://localhost:8080/games/' + this.$route.params.id + '/experience', {
                             content: this.xp.content,
                             rating: this.xp.rating,
                         }, {
