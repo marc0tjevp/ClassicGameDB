@@ -16,7 +16,7 @@
     "vue-base64-upload": "^1.0.1",
     "vue-cookie": "^1.1.4",
     "vue-izitoast": "^1.2.1",
-    "vue-moment": "^4.0.0",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
