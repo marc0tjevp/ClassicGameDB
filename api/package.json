@@ -26,7 +26,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-fileupload": "^1.0.0",
-    "express-jwt": "^6.0.0",
+    "express-jwt": "^8.0.0",
     "jwt-simple": "^0.5.5",
     "moment": "^2.22.2",
     "mongoose": "^5.7.5",
